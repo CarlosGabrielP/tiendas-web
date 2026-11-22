@@ -1,0 +1,3 @@
+Saira (Omnibus-Type), licencia SIL Open Font License 1.1: https://openfontlicense.org
+Archivos tomados de Google Fonts (subconjunto latino, fuente variable 100–900, normal e itálica).
+Se sirven desde la tienda para no bloquear la carga de la página.

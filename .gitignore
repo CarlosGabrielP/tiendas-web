@@ -1,0 +1,9 @@
+# Se genera con: python3 tiendas-web/build.py
+dist/
+__pycache__/
+*.pyc
+.DS_Store
+node_modules/
+
+# Descargas de clientes (Instagram, catálogos…): pueden traer datos personales, no se suben
+entrada/
