@@ -409,7 +409,8 @@
     "resenas": true,
     "pistaPadel": false,
     "whatsapp": true,
-    "demo": true
+    "demo": true,
+    "dosPasos": false
   },
   "legal": {
     "razonSocial": "[PENDIENTE: razón social]",

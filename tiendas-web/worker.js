@@ -1049,8 +1049,9 @@ async function login(request, env, ctx) {
     await fallo();
     return json({ error: "Contraseña incorrecta." }, 401);
   }
-  const dosPasos = (await leerDoc(env, "admin-2fa"))?.valor;
-  if (dosPasos?.activo) {
+  // Módulo «dosPasos» apagado: basta la contraseña (sesión completa). Encendido: hay que dar de alta y usar el código de la app.
+  const dosPasos = MODULOS.dosPasos ? (await leerDoc(env, "admin-2fa"))?.valor : { activo: true, apagado: true };
+  if (dosPasos?.activo && !dosPasos.apagado) {
     if (!b.codigo) return json({ requiere2fa: true });                       // contraseña correcta: ahora pide el código
     if (!(await verificarSegundoPaso(env, b.codigo))) {
       await fallo();
@@ -1068,6 +1069,7 @@ async function login(request, env, ctx) {
 async function rutas2fa(request, env, ruta, nivel) {
   let b = {}; if (request.method === "POST") { try { b = await request.json(); } catch {} }
   const doc = (await leerDoc(env, "admin-2fa"))?.valor || null;
+  if (!MODULOS.dosPasos) return ruta === "/2fa/estado" ? json({ activo: false, desactivada: true }) : json({ error: "La verificación en 2 pasos está desactivada en esta tienda." }, 403);
   if (ruta === "/2fa/estado" && request.method === "GET")
     return json({ activo: !!doc?.activo, desde: doc?.desde || null, recuperacionRestantes: doc?.recuperacion?.length ?? 0 });
   if (ruta === "/2fa/iniciar" && request.method === "POST") {

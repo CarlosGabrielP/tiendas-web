@@ -48,6 +48,7 @@ def cargar_tienda(clave):
     textos.setdefault("avisoProducto", "")
     textos.setdefault("beneficios", [{"ico": "💬", "titulo": "Asesoramiento", "texto": "Te ayudamos a elegir"}])
     for m in ("whatsapp", "demo"): t.setdefault("modulos", {}).setdefault(m, False)
+    t["modulos"].setdefault("dosPasos", True)   # verificación en 2 pasos del panel: encendida salvo que la tienda la apague
     esc = lambda x: str(x).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
     t["_beneficiosHtml"] = " ".join(f'<div class="beneficio"><span class="ico">{esc(b["ico"])}</span><div><b>{esc(b["titulo"])}</b>{esc(b["texto"])}</div></div>'
                                        for b in textos["beneficios"])

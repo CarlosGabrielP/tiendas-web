@@ -657,6 +657,7 @@ td s{color:var(--suave);font-size:.85em}
     <details style="margin-top:14px"><summary class="peq">Ver la tabla por día</summary><div class="tabla" style="margin-top:8px"><table><thead><tr><th>Día</th><th class="num">Visitantes</th><th class="num">Páginas vistas</th></tr></thead><tbody id="vis-tabla"></tbody></table></div></details>
     <p class="suave peq" style="margin-top:14px">Contador propio de la tienda: anónimo y sin cookies. Un <b>visitante</b> es una persona (mismo celular o computadora) en un día; si vuelve otro día cuenta de nuevo. No cuenta robots ni <b>este navegador</b>, porque aquí entraste al panel. Para no contarte en tu celular, entra al panel una vez desde él. Las visitas desde Google aparecen como «google»; si compartes un enlace con <code>?utm_source=instagram</code> se registra con ese nombre.</p>
   </section>
+  <style>.ejemplo-2fa{display:block;margin:12px 0}.ejemplo-2fa-caja{display:inline-flex;flex-direction:column;gap:4px;margin-top:6px;padding:12px 16px;border:1px solid var(--borde);border-radius:12px;background:var(--bg);min-width:220px}.ejemplo-2fa-codigo{font-size:1.8rem;font-weight:800;letter-spacing:.08em;color:var(--lima)}.ejemplo-2fa-barra{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--lima) 62%,var(--borde) 62%)}</style>
   <section class="tarjeta" id="seccion-seguridad" data-seccion="seguridad">
     <h2>Seguridad del panel</h2>
     <p id="seg-estado" class="peq">…</p>
@@ -668,7 +669,7 @@ td s{color:var(--suave);font-size:.85em}
     <div class="tabla" style="margin-top:10px"><table><thead><tr><th>Fecha</th><th class="num">Pedidos</th><th class="num">Productos</th><th class="num">Tamaño</th><th></th></tr></thead><tbody id="tabla-respaldos"></tbody></table></div>
     <h3 style="margin-top:22px">Alertas por correo</h3>
     <p class="suave peq">Se envían a <b>{{tienda.correo.contacto}}</b>: cada acceso al panel, intentos fallidos de entrar, avisos de pago con firma falsa, pagos aprobados que no llegaron (se corrigen solos), pedidos con alerta, pedidos pagados sin enviar por más de un día, tipo de cambio de Banxico desactualizado y fallas del respaldo.</p>
-    <p class="suave peq">Si pierdes el celular y también tus códigos de recuperación: en Cloudflare abre D1 → la base de la tienda → tabla <code>datos</code>, borra la fila <code>admin-2fa</code> y vuelve a entrar para darla de alta de nuevo.</p>
+    <p data-modulo="dosPasos" class="suave peq">Si pierdes el celular y también tus códigos de recuperación: en Cloudflare abre D1 → la base de la tienda → tabla <code>datos</code>, borra la fila <code>admin-2fa</code> y vuelve a entrar para darla de alta de nuevo.</p>
   </section>
   </div>
 </main>
@@ -1262,6 +1263,13 @@ async function cargarSeguridad(){
   cargarRespaldos();
   try {
     const d = await llamar("/2fa/estado");
+    if (d.desactivada) {   // módulo «dosPasos» apagado en tienda.json: se explica la función con un ejemplo
+      $("#seg-codigos").hidden = $("#seg-celular").hidden = true;
+      $("#seg-estado").innerHTML = `🔓 <b>Verificación en 2 pasos desactivada.</b> Es configurable: al activarla, además de la contraseña el panel pide un código de 6 dígitos que cambia cada 30 segundos en la app de tu celular (Google Authenticator, Microsoft Authenticator, Authy…). Incluye códigos de recuperación por si pierdes el celular y un correo de aviso en cada acceso.
+        <span class="ejemplo-2fa" aria-hidden="true"><span class="suave peq" style="display:block">Ejemplo de lo que verías al entrar:</span><span class="ejemplo-2fa-caja"><b>{{tienda.nombre}}:admin</b><span class="ejemplo-2fa-codigo">482 913</span><span class="ejemplo-2fa-barra"></span></span></span>
+        <span class="suave peq">Para activarla en tu tienda, pídelo a quien te administra la página.</span>`;
+      return;
+    }
     $("#seg-estado").innerHTML = d.activo ? `✅ <b>Verificación en 2 pasos activa</b> desde ${esc(new Date(d.desde).toLocaleDateString("es-MX", { day:"numeric", month:"long", year:"numeric" }))} · ${d.recuperacionRestantes} código${d.recuperacionRestantes === 1 ? "" : "s"} de recuperación disponible${d.recuperacionRestantes === 1 ? "" : "s"}${d.recuperacionRestantes <= 2 ? ` <span class="estado off">genera nuevos</span>` : ""}` : "⚠️ Verificación en 2 pasos inactiva";
   } catch (e) { $("#seg-estado").textContent = e.message; }
 }

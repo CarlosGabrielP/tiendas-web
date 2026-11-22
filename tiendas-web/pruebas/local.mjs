@@ -64,7 +64,10 @@ const pedir = (ruta, init) => worker.fetch(new Request(`https://${tienda.dominio
 if (!revisar) {
   createServer(async (req, res) => {
     const cuerpo = ["GET", "HEAD"].includes(req.method) ? undefined : await new Promise(ok => { const b = []; req.on("data", c => b.push(c)); req.on("end", () => ok(Buffer.concat(b))); });
-    const r = await pedir(req.url, { method: req.method, headers: req.headers, body: cuerpo });
+    // El servidor se hace pasar por el dominio de la tienda: el origen del navegador (localhost) se traduce igual, o el panel lo rechaza
+    const cabeceras = { ...req.headers };
+    for (const h of ["origin", "referer"]) if (cabeceras[h]) cabeceras[h] = cabeceras[h].replace(/^http:\/\/localhost:8787/, `https://${tienda.dominio}`);
+    const r = await pedir(req.url, { method: req.method, headers: cabeceras, body: cuerpo });
     res.writeHead(r.status, Object.fromEntries(r.headers)); res.end(Buffer.from(await r.arrayBuffer()));
   }).listen(8787, () => console.log(`${tienda.nombre} en http://localhost:8787 (panel: /admin, contraseña «prueba-local»)`));
 } else {

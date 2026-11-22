@@ -56,7 +56,7 @@ Ejemplo completo: `tiendas-web/demos/demo-suplementos/tienda.json`.
 Además de `id`, `nombre`, `categoria`, `precio`, `imagen`, `specs`, `etiquetas`, `stock`: `resumen` (máx. 400 caracteres, se ve en la ficha),
 `porciones` (número: muestra el precio por porción), `variantes` (opciones con sus existencias), `precioAntes` (precio tachado).
 
-Los campos `variante`, `tiempos`, `textos.beneficios`, `textos.avisoProducto` y los módulos `whatsapp` y `demo` son opcionales:
+Los campos `variante`, `tiempos`, `textos.beneficios`, `textos.avisoProducto` y los módulos `whatsapp`, `demo` y `dosPasos` son opcionales:
 si no están, `build.py` usa los valores de antes.
 
 ## Envío
@@ -76,6 +76,7 @@ si no están, `build.py` usa los valores de antes.
 | `pistaPadel` | Dibujo de la pista en la portada |
 | `whatsapp` | Botón flotante de WhatsApp (en una ficha, el mensaje lleva el nombre del producto) |
 | `demo` | Barra «Tienda de demostración» y el sitio no se indexa en buscadores |
+| `dosPasos` | Verificación en 2 pasos del panel (encendida si no se indica). Apagada, basta la contraseña y el apartado Seguridad explica la función con un ejemplo |
 
 Apagado = no aparece en la tienda (el HTML marcado con `<!--MODULO:x-->…<!--/MODULO:x-->` o `/*MODULO:x*/…/*/MODULO:x*/` se quita al construir),
 su apartado del panel se oculta, su API responde 404 y sus tareas programadas no corren.
