@@ -25,18 +25,18 @@
     "ciudad": "Ciudad de México",
     "estado": "Ciudad de México"
   },
-  "logoCorreo": "vértice<span style=\"color:#ffd23f\"> nutrición</span>",
+  "logoCorreo": "vértice<span style=\"color:#ff6b1a\"> nutrición</span>",
   "colores": {
     "primario": "#ff6b1a",
-    "primarioOscuro": "#e0520a",
-    "primarioClaro": "#ffa366",
+    "primarioOscuro": "#d9520a",
+    "primarioClaro": "#ffb07a",
     "acento": "#ffd23f",
-    "fondo": "#0b0b0d",
-    "tarjeta": "#161619",
-    "texto": "#f5f5f2",
-    "suave": "#a3a3a8",
-    "borde": "#2a2a30",
-    "barraNavegador": "#0b0b0d"
+    "fondo": "#f6f7f9",
+    "tarjeta": "#ffffff",
+    "texto": "#15171c",
+    "suave": "#5d6470",
+    "borde": "#e3e6eb",
+    "barraNavegador": "#ffffff"
   },
   "fuente": {
     "nombre": "Saira",
@@ -101,7 +101,8 @@
         "texto": "Te ayudamos a elegir según tu objetivo"
       }
     ],
-    "avisoProducto": "Este producto no es un medicamento. El consumo de este producto es responsabilidad de quien lo recomienda y de quien lo usa."
+    "avisoProducto": "Este producto no es un medicamento. El consumo de este producto es responsabilidad de quien lo recomienda y de quien lo usa.",
+    "heroImagen": "/img/portada.webp"
   },
   "categoriaPrincipal": "proteinas",
   "categorias": {
@@ -448,5 +449,6 @@
       5
     ],
     "diasCerrado": []
-  }
+  },
+  "plantilla": "fresca"
 }

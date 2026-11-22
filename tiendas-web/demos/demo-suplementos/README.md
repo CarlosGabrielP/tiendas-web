@@ -1,6 +1,6 @@
 # Demo: Vértice Nutrición (suplementos, ficticia)
 
-Tienda de demostración para enseñar la maqueta a tiendas de suplementos. Productos, marcas y datos de contacto son inventados.
+Tienda de demostración para enseñar la maqueta a tiendas de suplementos. Plantilla `fresca` (clara). Productos, marcas y datos de contacto son inventados.
 Investigación del nicho: `tiendas-web/docs/nichos/suplementos-mx.md`.
 
 ## Publicación

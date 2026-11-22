@@ -49,7 +49,12 @@ def cargar_tienda(clave):
     textos.setdefault("beneficios", [{"ico": "💬", "titulo": "Asesoramiento", "texto": "Te ayudamos a elegir"}])
     for m in ("whatsapp", "demo"): t.setdefault("modulos", {}).setdefault(m, False)
     t["modulos"].setdefault("dosPasos", True)   # verificación en 2 pasos del panel: encendida salvo que la tienda la apague
+    t.setdefault("plantilla", "deportiva")   # diseño: tiendas-web/plantillas/temas/<plantilla>.css
+    if not os.path.isfile(os.path.join(RAIZ, "plantillas", "temas", t["plantilla"] + ".css")):
+        sys.exit(f"tienda.json: no existe la plantilla «{t['plantilla']}» (ver tiendas-web/plantillas/temas/)")
     esc = lambda x: str(x).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+    img = textos.get("heroImagen", "")
+    t["_heroVisual"] = f'<img class="hero-img" src="{esc(img)}" alt="" fetchpriority="high">' if img else ""
     t["_beneficiosHtml"] = " ".join(f'<div class="beneficio"><span class="ico">{esc(b["ico"])}</span><div><b>{esc(b["titulo"])}</b>{esc(b["texto"])}</div></div>'
                                        for b in textos["beneficios"])
     # Campos calculados (empiezan con _): no se escriben en tienda.json
@@ -162,6 +167,8 @@ def construir(clave):
     cargar_tienda(clave)
     publico, admin, worker = leer("index.html"), leer("admin.html"), leer("worker.js")
     publico, admin = sin_modulos_apagados(publico, "index.html"), sin_modulos_apagados(admin, "admin.html")
+    if publico.count("/*TEMA*/") != 1: sys.exit("Marcador /*TEMA*/ no encontrado en index.html")
+    publico = publico.replace("/*TEMA*/", leer(os.path.join("plantillas", "temas", TIENDA["plantilla"] + ".css")))   # diseño elegido
     if admin.count("/*GENERADOR_QR*/") != 1: sys.exit("Marcador /*GENERADOR_QR*/ no encontrado en admin.html")
     admin = admin.replace("/*GENERADOR_QR*/", leer("qr.js"))   # QR para dar de alta la verificación en 2 pasos
     motor = leer("juego/motor.js")

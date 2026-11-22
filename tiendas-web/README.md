@@ -22,6 +22,7 @@ Plan y decisiones: `docs/MAQUETA.md`. Campos de la configuración: `docs/TIENDA-
 | `reloj/worker.js` | Worker aparte (cron) que llama a las tareas de cada tienda |
 | `juego/motor.js` | Motor del minijuego (el mismo en navegador y servidor) |
 | `qr.js` | Códigos QR para la verificación en 2 pasos del panel |
+| `plantillas/temas/` | Plantillas de diseño (`deportiva`, `fresca`, `boutique`); cada tienda elige una en `tienda.json` |
 | `plantillas/legal/` | Aviso de privacidad, términos y devoluciones genéricos con marcadores `{{tienda.*}}` |
 | `demos/<clave>/` | Tiendas de demostración (ficticias) |
 | `schema.sql` | Estructura de la base de datos D1 (bases nuevas) |

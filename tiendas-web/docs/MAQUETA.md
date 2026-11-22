@@ -46,6 +46,9 @@ leyenda de COFEPRIS («Este producto no es un medicamento…») y devoluciones s
 - **Recompra:** recordatorio por correo cuando se esté acabando el bote (suplementos, consumibles). Recomendado por la investigación del nicho.
 - **CSV del panel:** aún no lleva `porciones` ni `resumen` (se cargan en `catalogo.js` o editando el producto).
 - **Foto por variante:** la ficha muestra una sola foto aunque cambie el sabor.
+- **Fórmulas de precio:** hoy hay precio fijo en pesos y costo en euros (qpadel). Cada negocio calcula distinto (costo en pesos + margen,
+  precio sugerido del distribuidor, dólares…): se pregunta al conocer al cliente y se programa la fórmula que haga falta.
+- **Más plantillas:** hoy hay 3 (`deportiva`, `fresca`, `boutique`); se pueden agregar en `tiendas-web/plantillas/temas/`.
 - **Minijuego:** está hecho para pádel (rivales y marcador); para otros giros habría que cambiar personajes y textos.
 - **Correos:** el encabezado usa `logoCorreo` en texto; se puede cambiar por la imagen del logo.
 

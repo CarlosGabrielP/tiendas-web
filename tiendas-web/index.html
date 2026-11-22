@@ -369,6 +369,8 @@ footer .suave-pie{font-size:.82rem;opacity:.8}
   .precio{flex-wrap:wrap;gap:0 6px} .precio b{font-size:1.1rem}
   .producto .btn{font-size:.85rem;padding:.65em .5em}
 }
+.hero-img{width:100%;max-width:480px;margin-left:auto;display:block}
+/*TEMA*/
 </style>
 </head>
 <body data-ruta="inicio">
@@ -396,7 +398,7 @@ footer .suave-pie{font-size:.82rem;opacity:.8}
         <!--MODULO:recomendador--><a class="btn btn-sec" href="#recomendador">¿Cuál pala es para mí?</a><!--/MODULO:recomendador-->
       </div>
     </div>
-    <!--MODULO:pistaPadel--><div class="pista" aria-hidden="true"><i class="l1"></i><i class="l2"></i><i class="bola"></i></div><!--/MODULO:pistaPadel-->
+    <!--MODULO:pistaPadel--><div class="pista" aria-hidden="true"><i class="l1"></i><i class="l2"></i><i class="bola"></i></div><!--/MODULO:pistaPadel-->{{html:tienda._heroVisual}}
   </div>
 </section><!--/HERO-->
 
@@ -640,7 +642,7 @@ function detalleEntrega(p, v){
     <div class="nota-antes">✨ ${esc(NOTA_FECHA)}</div>
     <details class="por-que"><summary>¿Por qué hasta ${ENTREGA.diasMaxPedido} días hábiles?</summary><ul>${RAZONES_PEDIDO.map(t => `<li>${esc(t)}</li>`).join("")}</ul></details></div>`;
   const st = v ? v.stock : p.stock;
-  return `<div class="aviso-entrega inmediata"><b>⚡ Entrega inmediata</b>${mixto ? " (en las {{tienda.variante.plural}} marcadas con ⚡)" : ""}<br>
+  return `<div class="aviso-entrega inmediata"><b>⚡ Entrega inmediata</b>${mixto ? " (en las opciones con ⚡)" : ""}<br>
     ${e.hoy ? `Sale hoy si compras antes de las ${fmtHora(ENTREGA.envioHoyHasta)}` : `Sale el ${fmtDiaSemana(e.salida)} ${fmtFecha(e.salida).split(" ").slice(1).join(" ")}`}<br>
     Entrega estimada (días hábiles): ${rango}${st != null && st < 5 ? `<br><b style="color:var(--lima)">¡Solo ${st === 1 ? "queda 1" : `quedan ${st}`} en almacén!</b>` : ""}</div>`;
 }

@@ -36,6 +36,9 @@ Ejemplo completo: `tiendas-web/demos/demo-suplementos/tienda.json`.
 | `tiempos` | `{"zona", "envioHoyHasta", "diasEnvio", "cortePedidoHora", "diasMaxPedido", "diasTransito", "diasCerrado"}` | Cálculo de la fecha de entrega (por defecto, los de qpadel) |
 
 ## Diseño
+- `plantilla`: `deportiva` (oscura, la base), `fresca` (clara y redondeada) o `boutique` (cálida, con serifa). Ver `tiendas-web/plantillas/temas/LEEME.md`.
+  Las plantillas claras necesitan colores claros en `fondo`, `tarjeta`, `texto`, `suave` y `borde`; el logo debe verse sobre el color de `tarjeta`.
+- `textos.heroImagen` (opcional): foto de la portada, p. ej. `/img/portada.webp` (PNG o WebP con fondo transparente se ve mejor).
 - `colores`: `primario`, `primarioOscuro`, `primarioClaro`, `acento`, `fondo`, `tarjeta`, `texto`, `suave`, `borde`, `barraNavegador`.
 - `fuente`: `nombre`, `normal`, `italica` (archivos `.woff2` en `img/fuentes/`, con licencia libre).
 - Fotos: `img/logo.png` (fondo transparente, se ve sobre negro), `img/icono.png` (512×512), `img/apple-touch-icon.png` (180×180), `img/productos/*.webp`.

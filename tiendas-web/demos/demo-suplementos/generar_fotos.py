@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """Genera las fotos ficticias de la demo (envases con volumen, brillo y etiqueta) a partir de catalogo.js.
 
-Uso (desde la raíz del repositorio): python3 tiendas-web/demos/demo-suplementos/generar_fotos.py
+Uso (desde la raíz del repositorio): python3 tiendas-web/demos/demo-suplementos/generar_fotos.py [carpeta de la tienda]
+El logo toma el color de texto de su tienda.json (claro en plantillas oscuras, oscuro en las claras).
 Son ilustraciones de marcas inventadas: para una tienda real se usan las fotos del cliente.
 """
-import os, re
+import json, os, re, sys
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-AQUI = os.path.dirname(os.path.abspath(__file__))
-FUENTES = os.path.join(AQUI, "img", "fuentes")
+AQUI = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.dirname(os.path.abspath(__file__))
+FUENTES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "img", "fuentes")
 NAR, AMA, NEG = (255, 107, 26), (255, 210, 63), (14, 14, 16)
 W = 1000
 
@@ -110,6 +111,28 @@ def shaker(im, cx, base, alto=560, ancho=260):
     d.text((cx + 20, base - alto / 2), "VÉRTICE", font=fuente(int(ancho / 5.5), "Black Italic", True), fill=NEG, anchor="mm")
 
 
+def logo():
+    """Logo horizontal con fondo transparente; el texto toma el color de texto de la tienda."""
+    colores = json.load(open(os.path.join(AQUI, "tienda.json"), encoding="utf-8"))["colores"]
+    texto, acento = rgb(colores["texto"]), rgb(colores["primario"])
+    im = Image.new("RGBA", (900, 140), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+    d.polygon([(10, 112), (52, 22), (94, 112), (75, 112), (52, 62), (29, 112)], fill=NAR)
+    d.text((112, 6), "vértice", font=fuente(88, "Black Italic", True), fill=texto)
+    w = d.textlength("vértice ", font=fuente(88, "Black Italic", True))
+    d.text((112 + w, 6), "nutrición", font=fuente(88, "Black Italic", True), fill=acento)
+    im.crop(im.getbbox()).save(os.path.join(AQUI, "img", "logo.png"), optimize=True)
+
+
+def portada():
+    """Imagen de la portada (plantillas fresca y boutique): varios productos juntos sobre fondo transparente."""
+    im = Image.new("RGBA", (1340, 1000), (0, 0, 0, 0))
+    shaker(im, 130, 930, alto=420, ancho=200)
+    bote(im, 470, 900, 420, 560, (107, 62, 38), "Vértice", "Whey Protein 2 lb", "Chocolate", NAR)
+    bote(im, 850, 910, 280, 350, (242, 242, 242), "Vértice", "Creatina", "", NAR, chico=True)
+    frasco(im, 1170, 930, (27, 108, 168), "KORA", "Omega 3")
+    im.save(os.path.join(AQUI, "img", "portada.webp"), "WEBP", quality=86)
+
+
 def main():
     txt = open(os.path.join(AQUI, "catalogo.js"), encoding="utf-8").read()
     os.makedirs(os.path.join(AQUI, "img", "productos"), exist_ok=True)
@@ -140,6 +163,8 @@ def main():
             shaker(im, 500, 830)
         im.convert("RGB").save(os.path.join(AQUI, "img", "productos", pid + ".webp"), "WEBP", quality=84)
         print(pid)
+    portada()
+    logo()
 
 
 if __name__ == "__main__":

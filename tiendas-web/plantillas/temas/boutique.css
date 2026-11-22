@@ -1,0 +1,48 @@
+/* ===== Plantilla «boutique»: cálida y elegante, títulos con serifa, líneas finas ===== */
+:root{color-scheme:light;--radio:4px;--sombra:none;--serifa:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif}
+h1,h2,h3,.btn,.chip,.etq,.precio b{font-style:normal}
+h1,h2,h3,.eslogan,.producto h3,.precio b{font-family:var(--serifa);font-weight:600;text-transform:none;letter-spacing:0}
+.btn,.btn:active{transform:none;border-radius:2px;text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;padding:.95em 1.6em}
+.btn{background:var(--texto);color:var(--card)}.btn:hover{background:var(--azul)}
+.btn-sec{background:transparent;color:var(--texto);border:1px solid var(--texto)}.btn-sec:hover{background:var(--texto);color:var(--card)}
+.chip{border-radius:2px;text-transform:uppercase;letter-spacing:.08em;font-size:.78rem;background:transparent}
+.chip[aria-pressed="true"],.chip[aria-current="page"]{background:var(--texto);border-color:var(--texto);color:var(--card)}
+.aviso{background:var(--texto);color:var(--card);letter-spacing:.06em;font-size:.78rem}
+header{background:color-mix(in srgb,var(--fondo-b,var(--bg)) 94%,transparent);border-bottom:1px solid var(--borde)}
+.sug[aria-selected="true"],.sug:hover,.sug-todos[aria-selected="true"],.sug-todos:hover{background:var(--bg)}
+.hero{background:var(--bg);color:var(--texto);border-bottom:1px solid var(--borde)}
+.hero::before,.hero::after{display:none}
+.hero .contenedor{padding-top:72px;padding-bottom:72px}
+.hero .h1-tienda{color:var(--azul);letter-spacing:.2em;font-size:.78rem}
+.hero .eslogan{font-weight:500;line-height:1.1}
+.hero .eslogan em{color:var(--azul);font-style:italic}.hero .eslogan em.az{color:var(--azul)}
+.hero .btn{background:var(--texto);color:var(--card)}.hero .btn:hover{background:var(--azul)}
+.hero .btn-sec{color:var(--texto);border-color:var(--texto);background:transparent}.hero .btn-sec:hover{background:var(--texto);color:var(--card)}
+.hero-img{width:100%;max-width:500px;margin-left:auto;display:block}
+.beneficio{background:transparent;border:0;border-top:1px solid var(--borde);border-radius:0}
+.beneficio .ico{background:transparent;border:1px solid var(--borde);border-radius:50%}
+.producto{box-shadow:none;border:0;background:transparent}
+.producto .info{padding:12px 2px 4px}
+.producto .media,.ficha .media{background:var(--card)}
+.producto .cat,.mini{letter-spacing:.08em}
+.etq{border-radius:0;background:var(--card);color:var(--texto);border:1px solid var(--texto)}
+.etq.nuevo{background:var(--texto);color:var(--card)}
+.contador{background:var(--azul);color:#fff}
+.migas a:hover{color:var(--texto)}
+.estrellas-v{background:linear-gradient(90deg,#b8860b var(--p),#d8d2c6 var(--p));-webkit-background-clip:text;background-clip:text}
+.estrellas label{color:#d8d2c6}
+.descripcion-pagina,.guia{color:var(--texto)}
+.guia h2,.guia h3,.guia-entradilla,.tabla-guia th,.grid-guia .producto h3 a,.rec-item small,.agregado-ok b,.marcador-final span:last-child b{color:var(--texto)}
+.rec-item,.item svg,.item img{background:var(--card)}
+.vista-rapida{background:var(--card);color:var(--texto);border:1px solid var(--borde)}
+.modal .caja,.drawer{border-radius:0}
+footer{background:var(--card);border-top:1px solid var(--borde)}
+footer h4,footer .pie-tit{color:var(--texto);font-family:var(--serifa)}
+.opciones label:has(input:checked){background:var(--texto);border-color:var(--texto);color:var(--card)}
+.toast{background:var(--texto);color:var(--card)}
+
+/* Precios y etiquetas de entrega legibles sobre fondo claro */
+.precio b{color:var(--texto)}
+.entrega.inmediata{background:#e7f6e9;color:#1e6b2c;border-color:#bfe5c6}
+.entrega.pedido{background:#eef2fb;color:#2c4a8a;border-color:#cdd8f0}
+.aviso-entrega.inmediata{background:#f1faf2;border-color:#bfe5c6}.aviso-entrega.pedido{background:#f2f5fc;border-color:#cdd8f0}

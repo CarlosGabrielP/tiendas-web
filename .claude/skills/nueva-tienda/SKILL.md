@@ -13,7 +13,11 @@ Si el negocio vende por Instagram, empieza con la skill `tienda-desde-instagram`
 ## 1. Cuestionario (pregunta lo que falte, todo junto, no de uno en uno)
 - Negocio: nombre comercial, giro, qué vende, ciudad, por dónde vende hoy (WhatsApp, Instagram, local).
 - Contacto: WhatsApp, correo, dirección (o «solo envíos»), horario.
-- Marca: logo (PNG/SVG), 2 colores, estilo. Si no tiene, propón una paleta y enséñala antes de seguir.
+- Marca: logo (PNG/SVG), 2 colores, estilo. Propón una **plantilla** (`deportiva`, `fresca`, `boutique`) y una paleta, y enséñalas
+  antes de seguir (capturas de la portada y de un producto). No uses la plantilla y colores de otra tienda sin cambiarlos.
+- **Cómo pone sus precios** (cada negocio es distinto; no lo supongas): precio fijo que decide él, precio sugerido del distribuidor,
+  costo en pesos + margen, costo en dólares + tipo de cambio… La maqueta maneja hoy precio fijo en pesos (lo normal) y costo en euros
+  (módulo `preciosEuro`). Si necesita otra fórmula, anótala como pendiente y propón programarla (en el panel → Precios).
 - Venta: categorías, ¿tallas o variantes?, ¿inventario?, envío (paquetería, local, recoger), costo de envío, envío gratis desde, tiempos de entrega.
 - Cobro: ¿tiene Mercado Pago? (la cuenta debe ser suya). ¿Factura? Razón social y RFC. Plazo y condiciones de devolución.
 - Dominio: ¿tiene? Si no, propón 2–3 opciones y aclara que se registra a su nombre.

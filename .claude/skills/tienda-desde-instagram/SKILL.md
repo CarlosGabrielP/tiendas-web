@@ -35,7 +35,10 @@ Mira las fotos (Read) además de los textos. Decide y anota:
 - **Contacto**: WhatsApp y teléfono de la bio o del perfil (los tres formatos de `tienda.json`), correo, ciudad o dirección.
   Si la bio dice «solo envíos» o «entregas en…», úsalo en `textos.entrega` y en `legal.tiempoEntrega`.
 - **Textos**: `textos.hero`, `textos.pie` y `textos.descripcion` a partir de la bio, en el tono del negocio, sin prometer nada que no diga.
-- **Colores**: parte de `coloresSugeridos` y de la foto de perfil. Revisa contraste (texto claro sobre `fondo`, texto negro sobre `acento`).
+- **Plantilla y colores**: elige la plantilla que se parezca al estilo de su Instagram (fotos claras y alegres → `fresca`; elegante o
+  artesanal → `boutique`; oscura y deportiva → `deportiva`) y parte de `coloresSugeridos` y de la foto de perfil. Revisa contraste.
+- **Precios**: los del texto de las publicaciones pueden ser viejos o de promoción; confirma con el dueño **cómo calcula sus precios**
+  (ver la skill `nueva-tienda`, cuestionario).
 - **Logo**: si la foto de perfil es el logo, úsala para `icono.png` y `apple-touch-icon.png`. Para `logo.png` (horizontal, fondo
   transparente) pide el archivo original; si no hay, arma uno de texto con la fuente de la tienda y enséñalo.
 - **Productos**: cada publicación que muestra algo a la venta es un producto. Un carrusel = un producto con varias fotos (la primera es
