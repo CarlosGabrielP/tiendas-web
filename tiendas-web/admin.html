@@ -517,7 +517,7 @@ td s{color:var(--suave);font-size:.85em}
             <div class="np-grid" id="np-dinamico" hidden><label>Costo € (precio de oferta del proveedor)<input name="costoEur" type="number" min="0.01" step="any"></label><p class="peq suave" id="np-calculo"></p></div>
           </fieldset>
           <label>Entrega<select name="entrega"><option value="inmediata">⚡ Inmediata (si hay existencias)</option><option value="pedido">📦 Siempre bajo pedido</option></select></label>
-          <label>Tallas (opcional)<input name="tallas" placeholder="Ej. S, M, L, XL" maxlength="120"></label>
+          <label>{{tienda.variante.Plural}} (opcional)<input name="tallas" placeholder="{{tienda.variante.ejemplo}}" maxlength="120"></label>
           <div class="ancho" id="np-existencias"></div>
           <div class="ancho np-grid" id="np-palas" hidden>
             <label>Nivel<select name="nivel"><option value="">—</option><option value="iniciacion">Iniciación</option><option value="intermedio">Intermedio</option><option value="avanzado">Avanzado</option></select></label>
@@ -1341,7 +1341,7 @@ const estadoVis = p => visible(p) ? `<span class="estado ok">Visible</span>`
 const estado = p => visible(p) ? `${estadoVis(p)} ${etiquetaTipo(tipoAdmin(p))}` : estadoVis(p);   // vista previa del CSV
 const CATS = {{json:tienda.categorias}}, CATEGORIA_PRINCIPAL = "{{tienda.categoriaPrincipal}}";   // tienda.json de la tienda
 const NOMBRE_CAT = Object.fromEntries(Object.entries(CATS).map(([k, c]) => [k, c.nombre]));
-const detalleNombre = p => [p.variantes?.length && "Tallas " + p.variantes.map(v => v.talla).join(", "), p.specs?.Talla && "Talla " + p.specs.Talla, p.specs?.Marca].filter(Boolean).join(" · ");
+const detalleNombre = p => [p.variantes?.length && "{{tienda.variante.Plural}} " + p.variantes.map(v => v.talla).join(", "), p.specs?.Talla && "Talla " + p.specs.Talla, p.specs?.Marca].filter(Boolean).join(" · ");
 
 /* Precio normal / % de descuento a partir de lo guardado (precio = final, precioAntes = normal) */
 /* Precio dinámico: costo € × factor × tipo de cambio, terminado en 9 (mismo cálculo que el servidor) */

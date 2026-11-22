@@ -29,6 +29,8 @@ Plan y decisiones: `docs/MAQUETA.md`. Campos de la configuración: `docs/TIENDA-
 | `pruebas/local.mjs` | Corre una tienda construida en tu computadora (sin Cloudflare) y revisa sus páginas |
 | `herramientas/instagram.py` | Lee la descarga oficial de Instagram de un negocio y deja un borrador (perfil, colores, publicaciones con precios y fotos en WebP) |
 | `pruebas/instagram_prueba.py` | Prueba de la herramienta de Instagram con una descarga inventada |
+| `docs/nichos/` | Investigaciones de cada giro (skill `investigar-nicho`) |
+| `demos/demo-suplementos/generar_fotos.py` | Regenera las fotos ficticias de la demo |
 | `build.py` | Genera `dist/<clave>/_worker.js` (en la raíz del repositorio) |
 
 Cada carpeta de tienda tiene `tienda.json`, `catalogo.js`, `img/` y, si los necesita, `legal/` y `guias/`.

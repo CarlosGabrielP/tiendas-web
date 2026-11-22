@@ -40,6 +40,17 @@ def cargar_tienda(clave):
     t = json.load(open(ruta, encoding="utf-8"))
     if t.get("clave") != clave: sys.exit(f"tienda.json: «clave» debe ser {clave!r}")
     t.setdefault("sitio", "https://" + t["dominio"])
+    # Campos opcionales (agregados después): valores por defecto para que las tiendas existentes sigan construyendo igual
+    t.setdefault("variante", {"singular": "talla", "Singular": "Talla", "plural": "tallas", "Plural": "Tallas", "articulo": "una", "ejemplo": "Ej. S, M, L, XL"})
+    t.setdefault("tiempos", {"zona": "America/Mexico_City", "envioHoyHasta": 14, "diasEnvio": [1, 2, 3, 4, 5], "cortePedidoHora": 21,
+                             "diasMaxPedido": 10, "diasTransito": [2, 3], "diasCerrado": []})
+    textos = t.setdefault("textos", {})
+    textos.setdefault("avisoProducto", "")
+    textos.setdefault("beneficios", [{"ico": "💬", "titulo": "Asesoramiento", "texto": "Te ayudamos a elegir"}])
+    for m in ("whatsapp", "demo"): t.setdefault("modulos", {}).setdefault(m, False)
+    esc = lambda x: str(x).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+    t["_beneficiosHtml"] = " ".join(f'<div class="beneficio"><span class="ico">{esc(b["ico"])}</span><div><b>{esc(b["titulo"])}</b>{esc(b["texto"])}</div></div>'
+                                       for b in textos["beneficios"])
     # Campos calculados (empiezan con _): no se escriben en tienda.json
     slugs = [c["slug"] for c in t.get("categorias", {}).values()]
     t["_listaCategorias"] = ", ".join(slugs[:-1]) + " o " + slugs[-1] if len(slugs) > 1 else "".join(slugs)

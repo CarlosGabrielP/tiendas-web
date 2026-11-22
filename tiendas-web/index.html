@@ -119,7 +119,12 @@ a.media{display:grid}
 @media (prefers-reduced-motion:reduce){.pista .bola{animation:none}}
 
 /* Beneficios */
-.beneficios{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:32px auto}
+.beneficios{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:32px auto}
+.por-porcion{display:block;color:var(--suave);font-size:.82rem;margin-top:2px}
+.aviso-producto{margin:12px 0 0;padding:10px 12px;border:1px solid var(--borde);border-radius:10px;color:var(--suave);font-size:.82rem;line-height:1.45}
+.wa-flotante{position:fixed;right:16px;bottom:16px;z-index:40;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.35);text-decoration:none}
+.wa-flotante svg{width:30px;height:30px}
+.barra-demo{background:#fff3cd;color:#3d2e00;text-align:center;font-size:.8rem;font-weight:600;padding:.35em 16px}
 .beneficio{background:var(--card);border:1px solid var(--borde);border-radius:var(--radio);padding:16px;display:flex;gap:12px;align-items:center;font-size:.92rem}
 .beneficio b{display:block}
 .beneficio .ico{font-size:1.4rem;width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:10px;background:color-mix(in srgb,var(--azul) 22%,transparent)}
@@ -368,6 +373,7 @@ footer .suave-pie{font-size:.82rem;opacity:.8}
 </head>
 <body data-ruta="inicio">
 
+<!--MODULO:demo--><div class="barra-demo" role="note">Tienda de demostración: productos y marcas ficticios. Los pagos no son reales.</div><!--/MODULO:demo-->
 <div class="aviso" id="aviso" role="region" aria-label="Aviso">{{tienda.textos.aviso}}</div>
 <header>
   <div class="contenedor barra">
@@ -396,7 +402,7 @@ footer .suave-pie{font-size:.82rem;opacity:.8}
 
 <div class="contenedor beneficios">
   <div class="beneficio"><span class="ico">🚚</span><div><b id="txt-envio">Gratis desde {{tienda.envio.gratisDesdeTexto}}</b>{{tienda.textos.entrega}}</div></div>
-  <div class="beneficio"><span class="ico">💬</span><div><b>Asesoramiento</b>Te ayudamos a elegir</div></div>
+  {{html:tienda._beneficiosHtml}}
 </div>
 
 <section class="contenedor reto" id="reto" hidden>
@@ -465,6 +471,7 @@ footer .suave-pie{font-size:.82rem;opacity:.8}
   </div>
 </footer>
 
+<!--MODULO:whatsapp--><a class="wa-flotante" id="wa-flotante" href="https://wa.me/{{tienda.whatsapp}}?text=Hola%2C%20tengo%20una%20duda" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a><!--/MODULO:whatsapp-->
 <div class="velo" id="velo"></div>
 <aside class="drawer" id="drawer" aria-label="Carrito" aria-hidden="true" inert>
   <header><h2>Tu carrito</h2><button class="cerrar" data-cerrar aria-label="Cerrar carrito">×</button></header>
@@ -496,15 +503,8 @@ const TIENDA = {
 };
 
 /* ===== Tiempos de entrega (ajustar aquí si cambian) ===== */
-const ENTREGA = {
-  zona: "America/Mexico_City",
-  envioHoyHasta: 14,                      // entrega inmediata: compras antes de las 14:00 salen el mismo día
-  diasEnvio: [1, 2, 3, 4, 5],             // días que se envía (0=dom … 6=sáb)
-  cortePedidoHora: 21,                    // sin existencias: se pide al proveedor el mismo día hábil si compran antes de las 9:00 pm
-  diasMaxPedido: 10,                      // días hábiles máximos hasta la puerta del cliente (≈ 15 días naturales)
-  diasTransito: [2, 3],                   // 48-72 h hábiles de envío al cliente
-  diasCerrado: []                         // cierres extra "AAAA-MM-DD", p. ej. ["2026-12-24", "2026-12-31"]
-};
+// Tiempos de entrega (tienda.json → tiempos): zona horaria, hora de corte, días de envío, días máximos bajo pedido, tránsito y cierres
+const ENTREGA = {{json:tienda.tiempos}};
 
 // Categorías de la tienda (tienda.json de la tienda → categorias), en el orden en que se muestran
 const CATS = {{json:tienda._categoriasPublicas}};   // solo nombre, dirección y título (los costos no se publican)
@@ -640,14 +640,19 @@ function detalleEntrega(p, v){
     <div class="nota-antes">✨ ${esc(NOTA_FECHA)}</div>
     <details class="por-que"><summary>¿Por qué hasta ${ENTREGA.diasMaxPedido} días hábiles?</summary><ul>${RAZONES_PEDIDO.map(t => `<li>${esc(t)}</li>`).join("")}</ul></details></div>`;
   const st = v ? v.stock : p.stock;
-  return `<div class="aviso-entrega inmediata"><b>⚡ Entrega inmediata</b>${mixto ? " (en las tallas marcadas con ⚡)" : ""}<br>
+  return `<div class="aviso-entrega inmediata"><b>⚡ Entrega inmediata</b>${mixto ? " (en las {{tienda.variante.plural}} marcadas con ⚡)" : ""}<br>
     ${e.hoy ? `Sale hoy si compras antes de las ${fmtHora(ENTREGA.envioHoyHasta)}` : `Sale el ${fmtDiaSemana(e.salida)} ${fmtFecha(e.salida).split(" ").slice(1).join(" ")}`}<br>
     Entrega estimada (días hábiles): ${rango}${st != null && st < 5 ? `<br><b style="color:var(--lima)">¡Solo ${st === 1 ? "queda 1" : `quedan ${st}`} en almacén!</b>` : ""}</div>`;
 }
 const comprable = p => tienePrecio(p) && disponible(p);
 const descuento = p => tienePrecio(p) && p.precioAntes ? Math.round((1 - p.precio/p.precioAntes)*100) : 0;
 const precioHTML = p => tienePrecio(p) ? `<b>${fmt(p.precio)}</b>${p.precioAntes?`<s>${fmt(p.precioAntes)}</s>`:""}` : `<span style="color:var(--suave);font-weight:600">Precio próximamente</span>`;
-const textoBoton = p => !disponible(p) ? "Agotado" : !tienePrecio(p) ? "Próximamente" : tieneTallas(p) ? "Elegir talla" : "Agregar al carrito";
+// Precio por porción (si el producto dice cuántas porciones trae): así comparan los que saben
+const porPorcion = p => tienePrecio(p) && p.porciones > 0 ? `<small class="por-porcion">${fmt(p.precio / p.porciones)} por porción</small>` : "";
+const AVISO_PRODUCTO = "{{tienda.textos.avisoProducto}}";   // aviso obligatorio del giro en cada ficha (p. ej. suplementos)
+// WhatsApp flotante (módulo «whatsapp»): en una ficha, el mensaje ya trae el nombre del producto
+const waProducto = p => { const a = document.getElementById("wa-flotante"); if (a) a.href = `https://wa.me/{{tienda.whatsapp}}?text=${encodeURIComponent(p ? `Hola, tengo una duda sobre ${p.nombre}` : "Hola, tengo una duda")}`; };
+const textoBoton = p => !disponible(p) ? "Agotado" : !tienePrecio(p) ? "Próximamente" : tieneTallas(p) ? "Elegir {{tienda.variante.singular}}" : "Agregar al carrito";
 const precioOrden = (p, dir) => tienePrecio(p) ? p.precio : dir * Infinity;
 
 /* ===== Estado ===== */
@@ -705,9 +710,9 @@ function tarjeta(p){
       <span class="cat">${CATEGORIAS[p.categoria]}</span>
       <h3><a href="/productos/${p.id}">${esc(p.nombre)}</a></h3>
       <span class="mini">${esc(resumen)}</span>
-      ${tieneTallas(p) && disponible(p) ? `<span class="tallas-mini">Tallas: ${tallasDisponibles(p).map(v => esc(v.talla) + (tipoEntrega(p, v) === "pedido" && tipoProducto(p) === "inmediata" ? "<small>📦</small>" : "")).join(" · ")}</span>` : ""}
+      ${tieneTallas(p) && disponible(p) ? `<span class="tallas-mini">{{tienda.variante.Plural}}: ${tallasDisponibles(p).map(v => esc(v.talla) + (tipoEntrega(p, v) === "pedido" && tipoProducto(p) === "inmediata" ? "<small>📦</small>" : "")).join(" · ")}</span>` : ""}
       ${disponible(p) ? etiquetaEntrega(p) : ""}
-      <div class="precio">${precioHTML(p)}</div>
+      <div class="precio">${precioHTML(p)}${porPorcion(p)}</div>
       <button class="btn" ${tieneTallas(p) ? `data-ver="${p.id}"` : `data-add="${p.id}"`} ${comprable(p)?"":"disabled"}>${textoBoton(p)}</button>
     </div></article>`;
 }
@@ -715,6 +720,7 @@ function tarjeta(p){
 /* ===== Ficha ===== */
 function verFicha(id){
   const p = porId(id);
+  waProducto(p);
   const specs = Object.entries(p.specs || {});
   $("#modal-caja").innerHTML = `<button class="cerrar" data-cerrar aria-label="Cerrar">×</button>
     <div class="ficha">
@@ -723,15 +729,16 @@ function verFicha(id){
       <div class="ficha-compra">
         <span class="cat" style="color:var(--suave);text-transform:uppercase;font-size:.8rem">${CATEGORIAS[p.categoria]}</span>
         <h2 style="margin:.2em 0">${esc(p.nombre)}</h2>
-        <div class="precio">${precioHTML(p)}</div>
+        <div class="precio">${precioHTML(p)}${porPorcion(p)}</div>
         ${tienePrecio(p) ? `<small class="suave-txt" style="margin-top:2px">IVA incluido</small>` : ""}
         ${p.nivel?`<p style="margin:.5em 0 0">Nivel <b>${p.nivel.replace("iniciacion","iniciación")}</b> · Juego de <b>${p.juego}</b></p>`:""}
-        ${tieneTallas(p) && disponible(p) ? `<fieldset class="selector-talla"><legend>Talla</legend><div class="opciones">${tallasDisponibles(p).map(v =>
+        ${tieneTallas(p) && disponible(p) ? `<fieldset class="selector-talla"><legend>{{tienda.variante.Singular}}</legend><div class="opciones">${tallasDisponibles(p).map(v =>
           `<label title="${tipoEntrega(p, v) === "pedido" ? `Entrega en ${PLAZO_PEDIDO}` : "Entrega inmediata"}"><input type="radio" name="talla" value="${esc(v.talla)}">${esc(v.talla)} ${tipoEntrega(p, v) === "pedido" ? "📦" : "⚡"}</label>`).join("")}</div>
           <small class="suave-txt">⚡ entrega inmediata · 📦 hasta ${ENTREGA.diasMaxPedido} días hábiles</small></fieldset>` : ""}
-        <button class="btn btn-comprar" id="ficha-add" data-add="${p.id}" ${comprable(p) && !tieneTallas(p) ? "" : "disabled"}>${!comprable(p) ? textoBoton(p) : tieneTallas(p) ? "Elige una talla" : "Agregar al carrito"}</button>
+        <button class="btn btn-comprar" id="ficha-add" data-add="${p.id}" ${comprable(p) && !tieneTallas(p) ? "" : "disabled"}>${!comprable(p) ? textoBoton(p) : tieneTallas(p) ? "Elige {{tienda.variante.articulo}} {{tienda.variante.singular}}" : "Agregar al carrito"}</button>
         <div id="ficha-entrega">${!disponible(p) ? `<p style="color:var(--suave);font-size:.9rem">No disponible por ahora</p>` : detalleEntrega(p)}</div>
         ${p.resumen ? `<p class="ficha-resumen">${esc(p.resumen)}</p>` : ""}
+        ${AVISO_PRODUCTO ? `<p class="aviso-producto">${esc(AVISO_PRODUCTO)}</p>` : ""}
         <details class="descripcion" id="ficha-desc" hidden><summary>Descripción completa</summary><div></div></details>
       </div>
     </div>`;
@@ -761,7 +768,7 @@ function añadir(k, n=1, modo){
   const limite = Infinity;   // sin existencias suficientes, el resto va bajo pedido
   const actual = carrito[k] || 0;
   const nuevo = Math.min(actual + n, limite);
-  const nombre = p.nombre + (talla ? ` (talla ${talla})` : "");
+  const nombre = p.nombre + (talla ? ` ({{tienda.variante.singular}} ${talla})` : "");
   if(nuevo <= 0) delete carrito[k]; else carrito[k] = nuevo;
   if(n>0 && nuevo===actual) toast(`No hay más stock de ${nombre}`);
   else if(n>0 && modo) { AGREGADO = nombre; guardar("padel-carrito", carrito); pintarCarrito();
@@ -828,7 +835,7 @@ function pintarCarrito(){
   const {sub, desc, nota, neto, envio, total} = totales();
   const ids = Object.keys(carrito);
   $("#items").innerHTML = ids.length ? ids.map(id => { const {p, talla} = deClave(id); return `
-    <div class="item">${media(p)}<div><b>${esc(p.nombre)}</b>${talla ? `<small class="talla-item">Talla ${esc(talla)}</small>` : ""}<div class="cantidad">
+    <div class="item">${media(p)}<div><b>${esc(p.nombre)}</b>${talla ? `<small class="talla-item">{{tienda.variante.Singular}} ${esc(talla)}</small>` : ""}<div class="cantidad">
       <button data-menos="${id}" aria-label="Quitar uno">−</button><span>${carrito[id]}</span><button data-mas="${id}" aria-label="Agregar uno">+</button>
       <button class="quitar" data-quitar="${id}">Eliminar</button></div>${tipoLinea(id, carrito[id]) === "pedido" ? `<small class="con-tip" data-tip="pedido" tabindex="0" role="button" style="color:var(--azul-claro)">📦 Hasta ${ENTREGA.diasMaxPedido} días hábiles${!esPedido(p) && (deClave(id).v ? deClave(id).v.stock : p.stock) > 0 ? ` (solo hay ${deClave(id).v ? deClave(id).v.stock : p.stock} en almacén)` : ""} <span class="i" aria-hidden="true">ⓘ</span></small>` : ""}</div><b>${fmt(p.precio*carrito[id])}</b></div>`; }).join("")
     : `<p class="vacio">Tu carrito está vacío.<br>{{tienda.textos.carritoVacio}}</p>`;
@@ -837,7 +844,7 @@ function pintarCarrito(){
     if (AGREGADO) $("#items").insertAdjacentHTML("afterbegin", `<div class="agregado-ok" role="status">✓ Agregado: <b>${esc(AGREGADO)}</b></div>`);
     if (lista.length) $("#items").insertAdjacentHTML("beforeend", `<div class="complementos"><h3>Complementa tu compra</h3><div class="rec-fila">${lista.map(p => `
       <div class="rec-item">${media(p)}<b>${esc(p.nombre)}</b><small>${fmt(p.precio)}</small>${f > 0 && p.precio >= f ? `<span class="rec-envio">🚚 + envío gratis</span>` : ""}
-      <button class="btn" ${tieneTallas(p) ? `data-ver="${p.id}">Elegir talla` : `data-add-rec="${p.id}">+ Agregar`}</button></div>`).join("")}</div></div>`);
+      <button class="btn" ${tieneTallas(p) ? `data-ver="${p.id}">Elegir {{tienda.variante.singular}}` : `data-add-rec="${p.id}">+ Agregar`}</button></div>`).join("")}</div></div>`);
   }
   const falta = TIENDA.envioGratisDesde - neto;
   const conPedido = ids.filter(k => tipoLinea(k, carrito[k]) === "pedido");
@@ -1452,7 +1459,7 @@ addEventListener("scroll", () => { if (!cajaSug.hidden) posicionarSug(); }, { pa
 $("#modal-caja").addEventListener("change", e => {
   if (e.target.name !== "talla") return;
   const b = $("#ficha-add"), id = b.dataset.add.split("|")[0];
-  b.dataset.add = clave(id, e.target.value); b.disabled = false; b.textContent = `Agregar talla ${e.target.value}`;
+  b.dataset.add = clave(id, e.target.value); b.disabled = false; b.textContent = `Agregar {{tienda.variante.singular}} ${e.target.value}`;
   const p = porId(id), v = p.variantes.find(x => x.talla === e.target.value);
   $("#ficha-entrega").innerHTML = detalleEntrega(p, v);
 });

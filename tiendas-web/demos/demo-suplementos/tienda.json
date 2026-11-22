@@ -44,19 +44,19 @@
     "italica": "/img/fuentes/saira-latin-italica.woff2"
   },
   "envio": {
-    "gratisDesde": 1499,
-    "gratisDesdeTexto": "$1,499.00",
+    "gratisDesde": 999,
+    "gratisDesdeTexto": "$999.00",
     "costo": 129
   },
   "textos": {
-    "titulo": "Suplementos y proteína en México",
-    "descripcion": "Proteína, creatina, pre-entrenos y vitaminas con precio en pesos y envío a todo México. Tienda de demostración.",
-    "h1": "Suplementos deportivos en México",
+    "titulo": "Proteína, creatina y suplementos originales en México",
+    "descripcion": "Proteína whey, creatina monohidratada, pre-entrenos, omega 3, magnesio y colágeno originales, con precio por porción, envío a todo México y asesoría por WhatsApp. Tienda de demostración.",
+    "h1": "Suplementos originales en México",
     "eslogan": "entrena <em>fuerte</em>.<br>recupérate <em class=\"az\">mejor</em>.",
-    "hero": "Proteína, creatina, pre-entrenos, vitaminas y snacks para tu rutina, con envío a todo México.",
+    "hero": "Proteína, creatina, pre-entrenos y vitaminas originales, con caducidad vigente, precio por porción y asesoría real por WhatsApp.",
     "buscador": "Buscar proteína, creatina, sabores…",
-    "pie": "Suplementos originales y asesoría para elegir lo que necesitas. Los suplementos alimenticios no son medicamentos. Consulta a un profesional de la salud antes de usarlos si estás embarazada, en lactancia, tomas medicamentos o tienes alguna enfermedad.",
-    "enlacesPie": "<a href=\"/marcas\">Marcas</a><br><a href=\"/novedades\">Novedades</a>",
+    "pie": "Suplementos originales comprados a distribuidores autorizados. Este producto no es un medicamento. El consumo de este producto es responsabilidad de quien lo recomienda y de quien lo usa.",
+    "enlacesPie": "<a href=\"/guias/como-elegir-tu-proteina\">Cómo elegir tu proteína</a><br><a href=\"/guias\">Todas las guías</a><br><a href=\"/marcas\">Marcas</a><br><a href=\"/novedades\">Novedades</a>",
     "carritoVacio": "¡Arma tu próximo pedido! 💪",
     "rss": "Suplementos deportivos en México",
     "tipoProducto": "Suplementos",
@@ -66,11 +66,11 @@
       "#proteina",
       "#gym"
     ],
-    "aviso": "Envío gratis a todo México desde $1,499.00 💪",
-    "entrega": "📦 Enviamos en 1 día hábil · 🚚 Llega en 2 a 5 días hábiles",
+    "aviso": "Envío gratis a todo México desde $999.00 · Productos 100 % originales 💪",
+    "entrega": "📦 Sale en 1 día hábil · 🚚 Llega en 2 a 5 días hábiles",
     "novedades": {
       "titulo": "Novedades en suplementos",
-      "desc": "Lo más nuevo en {{tienda.nombre}}: proteínas, sabores y productos recién llegados. Precio en pesos y envío a todo México.",
+      "desc": "Lo más nuevo en {{tienda.nombre}}: sabores y productos recién llegados, originales y con envío a todo México.",
       "intro": "Los productos y sabores que acaban de llegar a nuestro catálogo."
     },
     "marcas": {
@@ -80,10 +80,28 @@
       "tituloMarca": "suplementos en México"
     },
     "guias": {
-      "titulo": "Guías de suplementos",
-      "desc": "Guías para elegir tus suplementos.",
-      "catalogo": "Todos los productos"
-    }
+      "titulo": "Guías de suplementos: proteína, creatina y más",
+      "desc": "Guías claras para elegir tus suplementos sin caer en promesas falsas.",
+      "catalogo": "Proteínas"
+    },
+    "beneficios": [
+      {
+        "ico": "✅",
+        "titulo": "100 % originales",
+        "texto": "Solo distribuidores autorizados; te enviamos foto del lote"
+      },
+      {
+        "ico": "📅",
+        "titulo": "Caducidad vigente",
+        "texto": "Al menos 6 meses de vida al enviarse"
+      },
+      {
+        "ico": "💬",
+        "titulo": "Asesoría por WhatsApp",
+        "texto": "Te ayudamos a elegir según tu objetivo"
+      }
+    ],
+    "avisoProducto": "Este producto no es un medicamento. El consumo de este producto es responsabilidad de quien lo recomienda y de quien lo usa."
   },
   "categoriaPrincipal": "proteinas",
   "categorias": {
@@ -91,14 +109,15 @@
       "nombre": "Proteínas",
       "slug": "proteinas",
       "h1": "Proteína en polvo",
-      "titulo": "Proteína en polvo en México: whey, isolate y vegetal",
-      "desc": "Proteína whey, isolate y vegetal en varios sabores, con precio en pesos y envío a todo México.",
-      "intro": "Proteína en polvo para complementar tu alimentación y tu recuperación: concentrada, aislada o vegetal, en varios sabores y presentaciones.",
+      "titulo": "Proteína whey, isolate y vegetal original en México",
+      "desc": "Proteína whey concentrada, aislada y vegetal original, con precio por porción y envío a todo México.",
+      "intro": "Proteína en polvo para completar la proteína de tu día: concentrada (whey), aislada (isolate) o vegetal, en varios sabores. Todas originales y con caducidad vigente.",
       "alias": [
         "proteina",
         "proteinas",
         "whey",
-        "isolate"
+        "isolate",
+        "proteina vegetal"
       ],
       "hashtag": null,
       "paquete": {
@@ -119,19 +138,20 @@
       "nombre": "Creatina",
       "slug": "creatina",
       "h1": "Creatina monohidratada",
-      "titulo": "Creatina monohidratada en México",
-      "desc": "Creatina monohidratada en polvo, sin sabor, con envío a todo México.",
-      "intro": "Creatina monohidratada pura para tu rutina de fuerza.",
+      "titulo": "Creatina monohidratada original en México",
+      "desc": "Creatina monohidratada pura, sin sabor, con precio por porción y envío a todo México.",
+      "intro": "Creatina monohidratada en polvo, el suplemento más estudiado para entrenamiento de fuerza. Sin sabor, para mezclar con tu bebida.",
       "alias": [
         "creatina",
-        "creatinas"
+        "creatinas",
+        "monohidratada"
       ],
       "hashtag": null,
       "paquete": {
         "largo": 15,
         "ancho": 15,
         "alto": 18,
-        "peso": 0.6
+        "peso": 0.7
       },
       "costo": {
         "envProv": 0,
@@ -145,21 +165,49 @@
       "nombre": "Pre-entrenos",
       "slug": "pre-entrenos",
       "h1": "Pre-entrenos",
-      "titulo": "Pre-entrenos en México",
-      "desc": "Pre-entrenos con y sin cafeína, con envío a todo México.",
-      "intro": "Fórmulas para antes de entrenar, con y sin cafeína.",
+      "titulo": "Pre-entrenos con y sin cafeína en México",
+      "desc": "Pre-entrenos con y sin cafeína, con la cantidad por porción a la vista. Envío a todo México.",
+      "intro": "Fórmulas para antes de entrenar. Revisa siempre la cafeína por porción y no la mezcles con otras bebidas con cafeína.",
       "alias": [
         "preentreno",
         "pre-entreno",
         "preentrenos",
-        "pre-entrenos"
+        "pre-entrenos",
+        "pre entreno"
       ],
       "hashtag": null,
       "paquete": {
         "largo": 15,
         "ancho": 15,
         "alto": 18,
-        "peso": 0.6
+        "peso": 0.7
+      },
+      "costo": {
+        "envProv": 0,
+        "envMx": 0,
+        "envMtyGdl": 0,
+        "envCliente": 0,
+        "peso": 1
+      }
+    },
+    "aminoacidos": {
+      "nombre": "Aminoácidos",
+      "slug": "aminoacidos",
+      "h1": "Aminoácidos: BCAA y glutamina",
+      "titulo": "BCAA y glutamina en México",
+      "desc": "Aminoácidos BCAA y glutamina en polvo, con envío a todo México.",
+      "intro": "Aminoácidos en polvo para tu rutina.",
+      "alias": [
+        "aminoacidos",
+        "bcaa",
+        "glutamina"
+      ],
+      "hashtag": null,
+      "paquete": {
+        "largo": 15,
+        "ancho": 15,
+        "alto": 18,
+        "peso": 0.7
       },
       "costo": {
         "envProv": 0,
@@ -173,14 +221,16 @@
       "nombre": "Vitaminas",
       "slug": "vitaminas",
       "h1": "Vitaminas y bienestar",
-      "titulo": "Vitaminas, omega 3 y colágeno en México",
-      "desc": "Multivitamínicos, omega 3, magnesio y colágeno con envío a todo México.",
-      "intro": "Suplementos para complementar tu alimentación diaria.",
+      "titulo": "Omega 3, magnesio y multivitamínicos en México",
+      "desc": "Omega 3, magnesio y multivitamínicos originales, con envío a todo México.",
+      "intro": "Suplementos para completar tu alimentación diaria.",
       "alias": [
         "vitamina",
         "vitaminas",
         "omega",
-        "colageno"
+        "omega 3",
+        "magnesio",
+        "multivitaminico"
       ],
       "hashtag": null,
       "paquete": {
@@ -197,12 +247,38 @@
         "peso": 1
       }
     },
+    "colageno": {
+      "nombre": "Colágeno",
+      "slug": "colageno",
+      "h1": "Colágeno hidrolizado",
+      "titulo": "Colágeno hidrolizado en México",
+      "desc": "Colágeno hidrolizado en polvo, con y sin sabor, con envío a todo México.",
+      "intro": "Colágeno hidrolizado en polvo para disolver en agua o en tu bebida.",
+      "alias": [
+        "colageno",
+        "colágeno"
+      ],
+      "hashtag": null,
+      "paquete": {
+        "largo": 15,
+        "ancho": 15,
+        "alto": 18,
+        "peso": 0.7
+      },
+      "costo": {
+        "envProv": 0,
+        "envMx": 0,
+        "envMtyGdl": 0,
+        "envCliente": 0,
+        "peso": 1
+      }
+    },
     "snacks": {
       "nombre": "Snacks",
       "slug": "snacks",
       "h1": "Barras y snacks de proteína",
-      "titulo": "Barras de proteína y snacks en México",
-      "desc": "Barras de proteína y snacks para llevar, con envío a todo México.",
+      "titulo": "Barras de proteína en México",
+      "desc": "Barras de proteína para llevar, con envío a todo México.",
       "intro": "Snacks prácticos para entre comidas.",
       "alias": [
         "snack",
@@ -225,12 +301,40 @@
         "peso": 1
       }
     },
+    "kits": {
+      "nombre": "Kits",
+      "slug": "kits",
+      "h1": "Kits y paquetes",
+      "titulo": "Kits de suplementos para empezar",
+      "desc": "Paquetes de proteína, creatina y shaker con precio especial y envío a todo México.",
+      "intro": "Paquetes armados para empezar o para ahorrar al comprar junto.",
+      "alias": [
+        "kit",
+        "kits",
+        "paquete",
+        "paquetes"
+      ],
+      "hashtag": null,
+      "paquete": {
+        "largo": 25,
+        "ancho": 25,
+        "alto": 30,
+        "peso": 2.5
+      },
+      "costo": {
+        "envProv": 0,
+        "envMx": 0,
+        "envMtyGdl": 0,
+        "envCliente": 0,
+        "peso": 1
+      }
+    },
     "accesorios": {
       "nombre": "Accesorios",
       "slug": "accesorios",
       "h1": "Shakers y accesorios",
       "titulo": "Shakers y accesorios para el gym en México",
-      "desc": "Shakers, pastilleros y accesorios para tu rutina.",
+      "desc": "Shakers y pastilleros para tu rutina.",
       "intro": "Accesorios para preparar y llevar tus suplementos.",
       "alias": [
         "accesorio",
@@ -261,7 +365,7 @@
       "accesorios",
       "snacks",
       "vitaminas",
-      "preentrenos"
+      "colageno"
     ],
     "orden": [
       "proteinas",
@@ -269,7 +373,10 @@
       "accesorios",
       "snacks",
       "vitaminas",
-      "preentrenos"
+      "colageno",
+      "preentrenos",
+      "aminoacidos",
+      "kits"
     ]
   },
   "envios": {
@@ -300,7 +407,9 @@
     "compras": false,
     "envios": true,
     "resenas": true,
-    "pistaPadel": false
+    "pistaPadel": false,
+    "whatsapp": true,
+    "demo": true
   },
   "legal": {
     "razonSocial": "[PENDIENTE: razón social]",
@@ -309,7 +418,34 @@
     "diasDevolucion": 5,
     "tiempoEntrega": "Tu pedido sale en 1 día hábil y llega en 2 a 5 días hábiles, según tu código postal.",
     "condicionDevolucion": "Por higiene y seguridad, solo aceptamos devoluciones de productos <b>cerrados, con su sello de seguridad intacto</b> y en su empaque original.",
-    "avisoGiro": "<h2>Suplementos alimenticios</h2><p>Los productos de esta tienda son suplementos alimenticios. <b>Este producto no es un medicamento. El consumo de este producto es responsabilidad de quien lo recomienda y de quien lo usa.</b> No sustituyen una alimentación variada ni el consejo de un profesional de la salud. Respeta la porción recomendada en la etiqueta y mantenlos fuera del alcance de los niños.</p>"
+    "avisoGiro": "<h2>Suplementos alimenticios</h2><p>Los productos de esta tienda son suplementos alimenticios. <b>Este producto no es un medicamento. El consumo de este producto es responsabilidad de quien lo recomienda y de quien lo usa.</b> No sustituyen una alimentación variada ni el consejo de un profesional de la salud, y no se venden para prevenir, tratar ni curar enfermedades. Respeta la porción recomendada en la etiqueta y mantenlos fuera del alcance de los niños. Consulta a un profesional de la salud antes de usarlos si estás embarazada, en lactancia, tomas medicamentos o tienes alguna enfermedad.</p><h2>Productos originales</h2><p>Compramos solo a distribuidores autorizados. Si tienes duda de un producto, pídenos por WhatsApp la foto del lote y la caducidad antes de comprar.</p>"
   },
-  "emoji": "💪"
+  "emoji": "💪",
+  "variante": {
+    "singular": "sabor",
+    "Singular": "Sabor",
+    "plural": "sabores",
+    "Plural": "Sabores",
+    "articulo": "un",
+    "ejemplo": "Ej. Chocolate, Vainilla, Fresa"
+  },
+  "tiempos": {
+    "zona": "America/Mexico_City",
+    "envioHoyHasta": 13,
+    "diasEnvio": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "cortePedidoHora": 18,
+    "diasMaxPedido": 7,
+    "diasTransito": [
+      2,
+      5
+    ],
+    "diasCerrado": []
+  }
 }

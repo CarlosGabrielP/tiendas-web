@@ -29,6 +29,12 @@ Ejemplo completo: `tiendas-web/demos/demo-suplementos/tienda.json`.
 | `emoji` | `💪` | Emoji de la marca en correos y avisos |
 | `logoCorreo` (html) | | Encabezado de los correos |
 
+## Tienda
+| Campo | Ejemplo | Para qué |
+|---|---|---|
+| `variante` | `{"singular": "sabor", "Singular": "Sabor", "plural": "sabores", "Plural": "Sabores", "articulo": "un", "ejemplo": "Ej. Chocolate, Vainilla"}` | Cómo se llaman las opciones de un producto (por defecto, tallas). En el catálogo siguen en `variantes: [{talla: "Vainilla", stock: 5}]` |
+| `tiempos` | `{"zona", "envioHoyHasta", "diasEnvio", "cortePedidoHora", "diasMaxPedido", "diasTransito", "diasCerrado"}` | Cálculo de la fecha de entrega (por defecto, los de qpadel) |
+
 ## Diseño
 - `colores`: `primario`, `primarioOscuro`, `primarioClaro`, `acento`, `fondo`, `tarjeta`, `texto`, `suave`, `borde`, `barraNavegador`.
 - `fuente`: `nombre`, `normal`, `italica` (archivos `.woff2` en `img/fuentes/`, con licencia libre).
@@ -36,7 +42,7 @@ Ejemplo completo: `tiendas-web/demos/demo-suplementos/tienda.json`.
 
 ## Textos (`textos`)
 `titulo` y `descripcion` (portada y buscadores), `h1`, `eslogan` (html), `hero`, `buscador`, `pie`, `enlacesPie` (html), `aviso` (barra de arriba),
-`entrega`, `carritoVacio`, `rss`, `tipoProducto` (Google Merchant), `categoriaMP` (categoría de Mercado Pago: `sports`, `others`…), `hashtags`,
+`entrega`, `beneficios` (lista de `{ico, titulo, texto}` junto al envío; por defecto «Asesoramiento»), `avisoProducto` (aviso obligatorio del giro en cada ficha, p. ej. la leyenda de COFEPRIS), `carritoVacio`, `rss`, `tipoProducto` (Google Merchant), `categoriaMP` (categoría de Mercado Pago: `sports`, `others`…), `hashtags`,
 `novedades.{titulo,desc,intro}` (admiten `{temp}` = temporada más nueva y `{temp|otro texto}`), `marcas.{titulo,desc,h1,tituloMarca}`, `guias.{titulo,desc,catalogo}`.
 
 ## Catálogo
@@ -45,6 +51,13 @@ Ejemplo completo: `tiendas-web/demos/demo-suplementos/tienda.json`.
   `costo` solo se usa con el módulo `preciosEuro`. Los costos no se publican en la tienda.
 - `categoriaPrincipal`: la que define «novedades por temporada» y pide complementos en el carrito.
 - `sugerencias.conPrincipal` / `sugerencias.orden`: qué categorías sugerir para completar la compra.
+
+## Productos (`catalogo.js`)
+Además de `id`, `nombre`, `categoria`, `precio`, `imagen`, `specs`, `etiquetas`, `stock`: `resumen` (máx. 400 caracteres, se ve en la ficha),
+`porciones` (número: muestra el precio por porción), `variantes` (opciones con sus existencias), `precioAntes` (precio tachado).
+
+Los campos `variante`, `tiempos`, `textos.beneficios`, `textos.avisoProducto` y los módulos `whatsapp` y `demo` son opcionales:
+si no están, `build.py` usa los valores de antes.
 
 ## Envío
 `envio.gratisDesde` (número), `envio.gratisDesdeTexto` (`$1,499.00`), `envio.costo`; `envios.paquetes` y `envios.descripcion` (Envíosperros).
@@ -61,6 +74,8 @@ Ejemplo completo: `tiendas-web/demos/demo-suplementos/tienda.json`.
 | `recomendador` | «Encuentra tu pala» (solo pádel) |
 | `juego` | Minijuego «¿Te atreves?» (pádel) |
 | `pistaPadel` | Dibujo de la pista en la portada |
+| `whatsapp` | Botón flotante de WhatsApp (en una ficha, el mensaje lleva el nombre del producto) |
+| `demo` | Barra «Tienda de demostración» y el sitio no se indexa en buscadores |
 
 Apagado = no aparece en la tienda (el HTML marcado con `<!--MODULO:x-->…<!--/MODULO:x-->` o `/*MODULO:x*/…/*/MODULO:x*/` se quita al construir),
 su apartado del panel se oculta, su API responde 404 y sus tareas programadas no corren.

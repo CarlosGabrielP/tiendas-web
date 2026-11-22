@@ -43,7 +43,9 @@ leyenda de COFEPRIS («Este producto no es un medicamento…») y devoluciones s
 - **Panel:** textos de pádel en apartados que la demo tiene apagados (proveedor, precios en euros, compras), el ejemplo de la plantilla CSV
   («Pala Ejemplo») y el formulario de producto con campos de pala (solo aparecen si la categoría se llama `palas`).
 - **Ficha de producto:** la frase «pala de nivel… para juego de…» solo sale en productos con `nivel` (pádel).
-- **Variantes:** el catálogo maneja «tallas»; para suplementos convendría «sabores» o «presentaciones» con el mismo mecanismo.
+- **Recompra:** recordatorio por correo cuando se esté acabando el bote (suplementos, consumibles). Recomendado por la investigación del nicho.
+- **CSV del panel:** aún no lleva `porciones` ni `resumen` (se cargan en `catalogo.js` o editando el producto).
+- **Foto por variante:** la ficha muestra una sola foto aunque cambie el sabor.
 - **Minijuego:** está hecho para pádel (rivales y marcador); para otros giros habría que cambiar personajes y textos.
 - **Correos:** el encabezado usa `logoCorreo` en texto; se puede cambiar por la imagen del logo.
 
@@ -53,6 +55,9 @@ leyenda de COFEPRIS («Este producto no es un medicamento…») y devoluciones s
 **Desde Instagram:** la mayoría de los clientes ya venden por Instagram. Con la descarga oficial de su cuenta (formato JSON),
 `tiendas-web/herramientas/instagram.py` saca perfil, colores, publicaciones, precios escritos y fotos; la skill `tienda-desde-instagram`
 convierte eso en la tienda, siempre confirmando productos y precios con la persona. No se scrapea Instagram.
+
+### Investigación de nichos
+Skill `investigar-nicho` → `tiendas-web/docs/nichos/<giro>.md`. Hecha: [suplementos en México](nichos/suplementos-mx.md) (aplicada a la demo).
 
 ### Fase 3 · Producto y operación
 - Publicar la demo de suplementos en `demo-suplementos.pages.dev` para enseñarla.

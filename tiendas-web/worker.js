@@ -339,6 +339,8 @@ function validarProductos(lista) {
     if (cr) prod.costoReal = { unitario: cr, fecha: texto(p.costoReal.fecha || "", 10), compra: texto(p.costoReal.compra || "", 20) };
     const resumen = texto(p.resumen || "", 400);
     if (resumen) prod.resumen = resumen;
+    const porciones = entero(p.porciones);   // para mostrar el precio por porción
+    if (porciones) prod.porciones = porciones;
     if (/^\d{4}-\d{2}-\d{2}$/.test(p.nuevoDesde || "")) prod.nuevoDesde = p.nuevoDesde;
     // Último cambio de costo en el proveedor (para filtrar «bajaron / subieron de precio» en el panel)
     const cc = p.cambioCosto, de = num(cc?.de), a = num(cc?.a);
@@ -415,8 +417,8 @@ async function cotizar(env, items, codigo) {
     if (!p || !visible(p)) throw new Error("Un producto de tu carrito ya no está disponible. Revisa tu carrito.");
     if (!(cantidad >= 1 && cantidad <= 20)) throw new Error("Cantidad inválida.");
     const talla = it.talla ? String(it.talla).slice(0, 20) : null;
-    if (p.variantes?.length) { const v = p.variantes.find(x => x.talla === talla); if (!v || v.disponible === false) throw new Error(`Elige una talla disponible de ${p.nombre}.`); }
-    else if (talla) throw new Error("Talla inválida.");
+    if (p.variantes?.length) { const v = p.variantes.find(x => x.talla === talla); if (!v || v.disponible === false) throw new Error(`Elige {{tienda.variante.articulo}} {{tienda.variante.singular}} disponible de ${p.nombre}.`); }
+    else if (talla) throw new Error("Esa opción no es válida ({{tienda.variante.singular}}).");
     const { precio, precioAntes } = precioDe(p, tcEf, config);
     if (!precio) throw new Error(`${p.nombre} aún no tiene precio.`);
     const st = existenciaDe(p, talla);
@@ -573,7 +575,7 @@ function plantillaCorreo(titulo, cuerpo, sitio) {
 </table></td></tr></table></body></html>`;
 }
 function tablaPedido(p) {
-  const filas = p.lineas.map(l => `<tr><td style="padding:8px 0;border-bottom:1px solid #eee">${escHtml(l.nombre)}${l.talla ? ` · talla ${escHtml(l.talla)}` : ""}${l.cantidad > 1 ? ` × ${l.cantidad}` : ""}${l.tipo === "pedido" ? `<br><span style="font-size:12px;color:{{tienda.colores.primario}}">📦 Entrega en hasta 10 días hábiles</span>` : ""}</td><td align="right" style="padding:8px 0;border-bottom:1px solid #eee;white-space:nowrap">${pesos(l.precio * l.cantidad)}</td></tr>`).join("");
+  const filas = p.lineas.map(l => `<tr><td style="padding:8px 0;border-bottom:1px solid #eee">${escHtml(l.nombre)}${l.talla ? ` · {{tienda.variante.singular}} ${escHtml(l.talla)}` : ""}${l.cantidad > 1 ? ` × ${l.cantidad}` : ""}${l.tipo === "pedido" ? `<br><span style="font-size:12px;color:{{tienda.colores.primario}}">📦 Entrega en hasta 10 días hábiles</span>` : ""}</td><td align="right" style="padding:8px 0;border-bottom:1px solid #eee;white-space:nowrap">${pesos(l.precio * l.cantidad)}</td></tr>`).join("");
   const fila = (a, b, fuerte) => `<tr><td style="padding:4px 0;${fuerte ? "font-weight:700;font-size:16px" : "color:#475467"}">${a}</td><td align="right" style="padding:4px 0;${fuerte ? "font-weight:700;font-size:16px" : "color:#475467"}">${b}</td></tr>`;
   return `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="font-size:14px;margin:12px 0">${filas}
     ${fila("Subtotal", pesos(p.subtotal))}${p.descuento ? fila(`Código ${escHtml(p.cupon?.codigo || "")}`, "−" + pesos(p.descuento)) : ""}${fila("Envío", p.envio ? pesos(p.envio) : "Gratis")}${fila("Total", pesos(p.total), true)}</table>`;
@@ -596,7 +598,7 @@ async function correoConfirmacion(env, p, reenvio = false) {
     <p style="margin:12px 0 4px;font-weight:700">Dirección de envío</p><p style="margin:0 0 16px;color:#475467;font-size:14px;line-height:1.5">${escHtml(p.cliente.nombre)}<br>${direccionDe(p.cliente)}</p>
     <p style="margin:0 0 8px;font-size:14px;color:#475467">Te avisaremos por correo cuando tu pedido salga, con el número de guía.</p>
     <p style="margin:20px 0 0"><a href="${enlace}" style="display:inline-block;background:{{tienda.colores.primario}};color:#fff;text-decoration:none;font-weight:700;padding:12px 20px;border-radius:10px">Ver mi pedido</a></p>`, sitio);
-  const txt = `¡Gracias por tu compra! Tu pedido ${p.id} está confirmado.\nTotal: ${pesos(p.total)}\n${p.lineas.map(l => `- ${l.nombre}${l.talla ? " (talla " + l.talla + ")" : ""} x${l.cantidad}: ${pesos(l.precio * l.cantidad)}`).join("\n")}\nEnvío: ${p.envio ? pesos(p.envio) : "gratis"}\nVer tu pedido: ${enlace}\nDudas: {{tienda.correo.contacto}} · WhatsApp {{tienda.telefono}}`;
+  const txt = `¡Gracias por tu compra! Tu pedido ${p.id} está confirmado.\nTotal: ${pesos(p.total)}\n${p.lineas.map(l => `- ${l.nombre}${l.talla ? " ({{tienda.variante.singular}} " + l.talla + ")" : ""} x${l.cantidad}: ${pesos(l.precio * l.cantidad)}`).join("\n")}\nEnvío: ${p.envio ? pesos(p.envio) : "gratis"}\nVer tu pedido: ${enlace}\nDudas: {{tienda.correo.contacto}} · WhatsApp {{tienda.telefono}}`;
   return enviarCorreo(env, { para: p.cliente.email, asunto: `Pedido ${p.id} confirmado · {{tienda.nombre}}`, html, texto: txt, clave: reenvio ? `confirmacion-${p.id}-${Date.now()}` : `confirmacion-${p.id}` });
 }
 async function correoEnviado(env, p, reenvio = false) {
@@ -1477,10 +1479,10 @@ export default {
     const url = new URL(request.url), host = url.hostname;
     if (REDIRIGIR.has(host) && (request.method === "GET" || request.method === "HEAD"))
       return new Response(null, { status: 301, headers: { location: `https://${DOMINIO}${url.pathname}${url.search}`, "cache-control": "public, max-age=3600" } });
-    if (!esPrivado(host)) return tienda.fetch(request, env, ctx);
-    // Sitio de pruebas: nunca indexable
+    const noIndexar = esPrivado(host) || MODULOS.demo;   // pruebas y tiendas de demostración: nunca indexables
+    if (!noIndexar) return tienda.fetch(request, env, ctx);
     if (url.pathname === "/robots.txt") return new Response("User-agent: *\nDisallow: /\n", { headers: { "content-type": "text/plain; charset=utf-8", "x-robots-tag": "noindex, nofollow" } });
-    if (url.pathname !== "/api/mp/webhook" && pideClave(request, env))
+    if (esPrivado(host) && url.pathname !== "/api/mp/webhook" && pideClave(request, env))
       return new Response("Sitio de pruebas privado de {{tienda.nombre}}.", { status: 401, headers: { "www-authenticate": 'Basic realm="{{tienda.nombre}} pruebas", charset="UTF-8"', "content-type": "text/plain; charset=utf-8", "x-robots-tag": "noindex, nofollow", "cache-control": "no-store" } });
     const r = await tienda.fetch(request, env, ctx);
     const res = new Response(r.body, r);

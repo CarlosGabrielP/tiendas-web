@@ -196,9 +196,9 @@ function rutaSeo(url, base, productos, descripciones, resenas = {}, agotados = [
     // Si está agotada, primero las de su misma marca y precio parecido
     const relacionados = productos.filter(q => q.categoria === x.categoria && q.id !== x.id);
     if (agotado) relacionados.sort((a, b) => (marcaDeSeo(b) === marca) - (marcaDeSeo(a) === marca) || Math.abs((a.precio || 0) - (x.precio || 0)) - Math.abs((b.precio || 0) - (x.precio || 0)));
-    const avisame = `https://wa.me/{{tienda.whatsapp}}?text=${encodeURIComponent(`Hola, me avisan cuando vuelva la ${x.nombre}?`)}`;
-    const boton = agotado ? `<button class="btn btn-comprar" disabled>Agotada por ahora</button>` : typeof x.precio !== "number" ? `<button class="btn btn-comprar" disabled>Próximamente</button>`
-      : x.variantes?.length ? `<button class="btn btn-comprar" data-ver="${x.id}">Elegir talla</button>` : `<button class="btn btn-comprar" data-add="${x.id}">Agregar al carrito</button>`;
+    const avisame = `https://wa.me/{{tienda.whatsapp}}?text=${encodeURIComponent(`Hola, ¿me avisan cuando vuelva ${x.nombre}?`)}`;
+    const boton = agotado ? `<button class="btn btn-comprar" disabled>Agotado por ahora</button>` : typeof x.precio !== "number" ? `<button class="btn btn-comprar" disabled>Próximamente</button>`
+      : x.variantes?.length ? `<button class="btn btn-comprar" data-ver="${x.id}">Elegir {{tienda.variante.singular}}</button>` : `<button class="btn btn-comprar" data-add="${x.id}">Agregar al carrito</button>`;
     const ssr = `<section class="contenedor pagina-producto">${migasHtml(migas)}
       <div class="ficha">
         <div class="media">${x.imagen ? `<img src="${escSeo(rutaImgSeo(x.imagen))}" alt="${escSeo(x.nombre)}" fetchpriority="high">` : ""}</div>
@@ -206,13 +206,14 @@ function rutaSeo(url, base, productos, descripciones, resenas = {}, agotados = [
           <span class="cat" style="color:var(--suave);text-transform:uppercase;font-size:.8rem">${escSeo(info.nombre)}${marca ? " · " + escSeo(marca) : ""}</span>
           <h1>${escSeo(x.nombre)}</h1>
           ${rs ? `<a class="calificacion" href="#opiniones" aria-label="Calificación ${prom} de 5, ${rs.n} ${rs.n === 1 ? "opinión" : "opiniones"}"><span class="estrellas-v" style="--p:${prom / 5 * 100}%" aria-hidden="true">★★★★★</span> <b>${prom.toFixed(1)}</b> <span class="suave-txt">(${rs.n} ${rs.n === 1 ? "opinión" : "opiniones"})</span></a>` : ""}
-          <div class="precio">${precioTxt ? `<b>${precioTxt}</b>${x.precioAntes ? `<s>${pesosSeo(x.precioAntes)}</s>` : ""}` : "<span>Precio próximamente</span>"}</div>
+          <div class="precio">${precioTxt ? `<b>${precioTxt}</b>${x.precioAntes ? `<s>${pesosSeo(x.precioAntes)}</s>` : ""}` : "<span>Precio próximamente</span>"}${precioTxt && x.porciones > 0 ? `<small class="por-porcion">${pesosSeo(x.precio / x.porciones)} por porción</small>` : ""}</div>
           ${precioTxt ? `<small class="suave-txt">IVA incluido · ${x.precio >= ENVIO.gratisDesde ? "envío gratis" : `envío ${pesosSeo(ENVIO.costo)} (gratis desde ${pesosSeo(ENVIO.gratisDesde)})`}</small>` : ""}
           ${x.nivel ? `<p style="margin:.5em 0 0">Nivel <b>${escSeo(x.nivel.replace("iniciacion", "iniciación"))}</b> · Juego de <b>${escSeo(x.juego || "")}</b></p>` : ""}
-          ${x.variantes?.length ? `<p class="suave-txt">Tallas: ${x.variantes.filter(v => v.disponible !== false).map(v => escSeo(v.talla)).join(" · ")}</p>` : ""}
+          ${x.variantes?.length ? `<p class="suave-txt">{{tienda.variante.Plural}}: ${x.variantes.filter(v => v.disponible !== false).map(v => escSeo(v.talla)).join(" · ")}</p>` : ""}
           ${boton}
-          <div id="pagina-entrega">${agotado ? `<p class="aviso-entrega agotado">⛔ <b>Agotada por ahora.</b> Nuestro proveedor se quedó sin piezas de este modelo; suele volver pronto. <a href="${escSeo(avisame)}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a> y te avisamos cuando regrese. Mientras, abajo tienes modelos parecidos disponibles.</p>` : `<p class="aviso-entrega ${pedido ? "pedido" : "inmediata"}">${pedido ? "📦 <b>Entrega en máximo 10 días hábiles:</b> lo pedimos a nuestro proveedor el mismo día hábil de tu compra. Al pagar te mostramos la fecha máxima de entrega." : "⚡ <b>Entrega inmediata:</b> enviamos el mismo día hábil si pagas antes de las 2:00 p.m.; llega en 48–72 horas hábiles."}</p>`}</div>
+          <div id="pagina-entrega">${agotado ? `<p class="aviso-entrega agotado">⛔ <b>Agotado por ahora.</b> Nuestro proveedor se quedó sin piezas; suele volver pronto. <a href="${escSeo(avisame)}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a> y te avisamos cuando regrese. Mientras, abajo tienes modelos parecidos disponibles.</p>` : `<p class="aviso-entrega ${pedido ? "pedido" : "inmediata"}">${pedido ? "📦 <b>Entrega en máximo 10 días hábiles:</b> lo pedimos a nuestro proveedor el mismo día hábil de tu compra. Al pagar te mostramos la fecha máxima de entrega." : "⚡ <b>Entrega inmediata:</b> enviamos el mismo día hábil si pagas antes de las 2:00 p.m.; llega en 48–72 horas hábiles."}</p>`}</div>
           ${x.resumen ? `<p class="ficha-resumen">${escSeo(x.resumen)}</p>` : ""}
+          ${TEXTOS_SEO.avisoProducto ? `<p class="aviso-producto">${escSeo(TEXTOS_SEO.avisoProducto)}</p>` : ""}
         </div>
         ${specs.length ? `<div class="ficha-tecnica"><h2 style="font-size:1.05rem">Ficha técnica</h2><table class="specs">${specs.map(([k, v]) => `<tr><td>${escSeo(k)}</td><td>${escSeo(v)}</td></tr>`).join("")}</table></div>` : ""}
       </div>
@@ -305,7 +306,7 @@ function feedGoogle(productos, descripciones) {
       const pedido = p.entrega === "pedido" || (v ? v.stock === 0 : esPedidoSeo(p));
       items.push(`<item>
 <g:id>${x(idFeed(v ? `${p.id}-${v.talla}`.toLowerCase().replace(/[^a-z0-9-]+/g, "-") : p.id))}</g:id>
-<title>${x(recortar(p.nombre + (v ? ` - Talla ${v.talla}` : ""), 150))}</title>
+<title>${x(recortar(p.nombre + (v ? ` - {{tienda.variante.Singular}} ${v.talla}` : ""), 150))}</title>
 <description>${x(desc)}</description>
 <link>${SITIO}/productos/${p.id}</link>
 <g:image_link>${x(imgAbs(p))}</g:image_link>
